@@ -10,7 +10,18 @@ public class MathController {
 
     @RequestMapping(value = "/multiplication/{numberOne}/{numberTwo}", method = RequestMethod.GET)
     public Double multiplication(@PathVariable(value = "numberOne") String numberOne,
-                                 @PathVariable(value = "numberTwo") String numberTwo) {
-        return 1D;
+                                 @PathVariable(value = "numberTwo") String numberTwo) throws Exception {
+        if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+         throw new Exception();
+        }
+        return convertToDouble(numberOne) * convertToDouble(numberTwo);
+    }
+
+    private Double convertToDouble(String strNumber) {
+        return null;
+    }
+
+    private boolean isNumeric(String strNumber) {
+        return false;
     }
 }
