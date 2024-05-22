@@ -1,5 +1,6 @@
 package com.spring.second;
 
+import com.spring.second.exceptions.UnsupportedMathOperationException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.atomic.AtomicLong;
@@ -12,7 +13,7 @@ public class MathController {
     public Double multiplication(@PathVariable(value = "numberOne") String numberOne,
                                  @PathVariable(value = "numberTwo") String numberTwo) throws Exception {
         if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-         throw new Exception();
+         throw new UnsupportedMathOperationException("Please set a numeric value");
         }
         return convertToDouble(numberOne) * convertToDouble(numberTwo);
     }
@@ -22,7 +23,7 @@ public class MathController {
             return 0D;
         }
         String number = strNumber.replaceAll(",", ".");
-        if (isNumeric(number)) return Double.parseDouble(number);
+        if (isNumeric(number))   return Double.parseDouble(number);
         return 0D;
     }
 
