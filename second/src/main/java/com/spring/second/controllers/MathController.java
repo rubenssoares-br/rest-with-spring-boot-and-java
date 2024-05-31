@@ -1,13 +1,21 @@
 package com.spring.second.controllers;
 
+
 import com.spring.second.exceptions.UnsupportedMathOperationException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import com.spring.second.utilsMethods.UtilsMethods;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+import static com.spring.second.utilsMethods.UtilsMethods.*;
+
+
 @RestController
 public class MathController {
-    private final AtomicLong counter = new AtomicLong();
+    public final AtomicLong counter = new AtomicLong();
 
     @RequestMapping(value = "/multiplication/{numberOne}/{numberTwo}", method = RequestMethod.GET)
     public Double multiplication(@PathVariable(value = "numberOne") String numberOne,
@@ -60,26 +68,5 @@ public class MathController {
             throw new UnsupportedMathOperationException("Please set a numeric value");
         }
         return Math.sqrt(convertToDouble(numberOne));
-    }
-
-    private Double convertToDouble(String strNumber) {
-        if (strNumber == null) {
-            return 0D;
-        }
-        String number = strNumber.replaceAll(",", ".");
-        if (isNumeric(number))   return Double.parseDouble(number);
-        return 0D;
-    }
-
-    private boolean isNumeric(String strNumber) {
-        if (strNumber == null) {
-            return false;
-        } String number = strNumber.replaceAll(",", ".");
-        return number.matches("[-+]?[0-9]*\\.?[0-9]+");
-    }
-
-    private Double averageTwoNumbers(String strNumber1, String strNumber2) {
-        Double average = (convertToDouble(strNumber1) + convertToDouble(strNumber2)) / 2;
-        return average;
     }
 }
