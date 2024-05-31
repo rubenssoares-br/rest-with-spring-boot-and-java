@@ -45,6 +45,15 @@ public class MathController {
         return convertToDouble(numberOne) / convertToDouble(numberTwo);
     }
 
+    @RequestMapping(value = "/average/{number1}/{number2}", method = RequestMethod.GET)
+    public Double average(@PathVariable(value = "number1") String numberOne,
+                           @PathVariable(value = "number2") String numberTwo) throws Exception {
+        if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+            throw new UnsupportedMathOperationException("Please set a numeric value");
+        }
+        return averageTwoNumbers(numberOne, numberTwo);
+    }
+
     private Double convertToDouble(String strNumber) {
         if (strNumber == null) {
             return 0D;
@@ -59,5 +68,10 @@ public class MathController {
             return false;
         } String number = strNumber.replaceAll(",", ".");
         return number.matches("[-+]?[0-9]*\\.?[0-9]+");
+    }
+
+    private Double averageTwoNumbers(String strNumber1, String strNumber2) {
+        Double average = (convertToDouble(strNumber1) + convertToDouble(strNumber2)) / 2;
+        return average;
     }
 }
