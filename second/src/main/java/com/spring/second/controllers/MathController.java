@@ -1,4 +1,4 @@
-package com.spring.second;
+package com.spring.second.controllers;
 
 import com.spring.second.exceptions.UnsupportedMathOperationException;
 import org.springframework.web.bind.annotation.*;
