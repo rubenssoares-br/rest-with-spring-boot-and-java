@@ -6,12 +6,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.spring.second.utilsMethods.UtilsMethods;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-import static com.spring.second.utilsMethods.UtilsMethods.*;
-
+import static com.spring.second.converters.NumberConverter.convertToDouble;
+import static com.spring.second.converters.NumberConverter.isNumeric;
 
 @RestController
 public class MathController {
@@ -59,7 +58,7 @@ public class MathController {
         if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
             throw new UnsupportedMathOperationException("Please set a numeric value");
         }
-        return averageTwoNumbers(numberOne, numberTwo);
+        return ((convertToDouble(numberOne) + convertToDouble(numberTwo)) / 2);
     }
 
     @RequestMapping(value = "/squareRoot/{number1}", method = RequestMethod.GET)
