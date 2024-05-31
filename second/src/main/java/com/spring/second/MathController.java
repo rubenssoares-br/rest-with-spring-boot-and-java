@@ -36,6 +36,15 @@ public class MathController {
         return convertToDouble(numberOne) + convertToDouble(numberTwo);
     }
 
+    @RequestMapping(value = "/division/{number1}/{number2}", method = RequestMethod.GET)
+    public Double division(@PathVariable(value = "number1") String numberOne,
+                           @PathVariable(value = "number2") String numberTwo) throws Exception {
+        if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+            throw new UnsupportedMathOperationException("Please set a numeric value");
+        }
+        return convertToDouble(numberOne) / convertToDouble(numberTwo);
+    }
+
     private Double convertToDouble(String strNumber) {
         if (strNumber == null) {
             return 0D;
