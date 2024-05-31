@@ -54,6 +54,14 @@ public class MathController {
         return averageTwoNumbers(numberOne, numberTwo);
     }
 
+    @RequestMapping(value = "/squareRoot/{number1}", method = RequestMethod.GET)
+    public Double squareRoot(@PathVariable(value = "number1") String numberOne) throws Exception {
+        if (!isNumeric(numberOne)) {
+            throw new UnsupportedMathOperationException("Please set a numeric value");
+        }
+        return Math.sqrt(convertToDouble(numberOne));
+    }
+
     private Double convertToDouble(String strNumber) {
         if (strNumber == null) {
             return 0D;
