@@ -50,4 +50,13 @@ public class PersonServices {
         person.setGender("Male");
         return person;
     }
+
+    public Person create(Person person) {
+
+     logger.info("Creating one person!");
+
+     return person;
+
+    }
+
 }
