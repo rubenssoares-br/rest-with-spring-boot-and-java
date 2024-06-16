@@ -67,4 +67,10 @@ public class PersonServices {
 
     }
 
+    public void delete(String id) {
+
+        logger.info("Deleting one person!");
+
+    }
+
 }
