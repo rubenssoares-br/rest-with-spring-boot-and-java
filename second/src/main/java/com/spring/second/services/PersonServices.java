@@ -59,4 +59,12 @@ public class PersonServices {
 
     }
 
+    public Person update(Person person) {
+
+        logger.info("Updating one person!");
+
+        return person;
+
+    }
+
 }
