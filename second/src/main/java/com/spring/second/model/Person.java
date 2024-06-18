@@ -1,14 +1,29 @@
 package com.spring.second.model;
 
+import jakarta.persistence.*;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
+@Table(name = "person")
 public class Person implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "first_name", nullable = false, length = 60)
     private String firstname;
+
+    @Column(name = "last_name", nullable = false, length = 60)
     private String lastName;
+
+    @Column(nullable = false, length = 100)
     private String address;
+
+    @Column(nullable = false, length = 6)
     private String gender;
 
     public Person() {}
