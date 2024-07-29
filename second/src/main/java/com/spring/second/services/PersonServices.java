@@ -7,10 +7,7 @@ import org.apache.juli.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.awt.image.AreaAveragingScaleFilter;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
 @Service
@@ -18,7 +15,7 @@ public class PersonServices {
 
     private Logger logger = Logger.getLogger(PersonServices.class.getName());
 
-    @Autowired
+    @Autowired(required = false)
     PersonRepository repository;
 
     public List<Person> findAll() {
@@ -32,17 +29,6 @@ public class PersonServices {
 
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
-    }
-
-    private Person mockPerson(int i) {
-
-        Person person = new Person();
-        person.setId(counter.incrementAndGet());
-        person.setFirstname("Person name " + i);
-        person.setLastName("Last name " + i);
-        person.setAddress("Some address in Brazil " + i);
-        person.setGender("Male");
-        return person;
     }
 
     public Person create(Person person) {
