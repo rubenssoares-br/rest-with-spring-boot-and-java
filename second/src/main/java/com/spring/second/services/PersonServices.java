@@ -1,9 +1,11 @@
 package com.spring.second.services;
 
 import com.spring.second.exceptions.ResourceNotFoundException;
+import com.spring.second.mapper.ModelMapperUtils;
 import com.spring.second.model.Person;
 import com.spring.second.repository.PersonRepository;
-import org.apache.juli.logging.Log;
+import com.spring.second.vo.v1.PersonVO;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,35 +17,41 @@ public class PersonServices {
 
     private Logger logger = Logger.getLogger(PersonServices.class.getName());
 
-    @Autowired(required = false)
+    @Autowired
     PersonRepository repository;
 
-    public List<Person> findAll() {
+    public List<PersonVO> findAll() {
 
-        return repository.findAll();
+        return ModelMapperUtils.parseListObjects(repository.findAll(), PersonVO.class);
     }
 
-    public Person findById(Long id) {
+    public PersonVO findById(Long id) {
 
         logger.info("Finding one person!");
 
-        return repository.findById(id)
+        var entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+
+        return ModelMapperUtils.parseObject(entity, PersonVO.class);
     }
 
-    public Person create(Person person) {
+    public PersonVO create(PersonVO person) {
 
      logger.info("Creating one person!");
 
-     return repository.save(person);
+     var entity = ModelMapperUtils.parseObject(person, Person.class);
+
+     var vo = ModelMapperUtils.parseObject(repository.save(entity), PersonVO.class);
+
+     return vo;
 
     }
 
-    public Person update(Person person) {
+    public PersonVO update(PersonVO person) {
 
         logger.info("Updating one person!");
 
-      Person entity = repository.findById(person.getId())
+      var entity = repository.findById(person.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
 
         entity.setFirstname(person.getFirstname());
@@ -51,7 +59,8 @@ public class PersonServices {
         entity.setAddress(person.getAddress());
         entity.setGender(person.getGender());
 
-        return repository.save(person);
+        var vo = ModelMapperUtils.parseObject(repository.save(entity), PersonVO.class);
+        return vo;
 
     }
 
@@ -59,7 +68,7 @@ public class PersonServices {
 
         logger.info("Deleting one person!");
 
-        Person entity = repository.findById(id)
+        var entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
 
         repository.delete(entity);
