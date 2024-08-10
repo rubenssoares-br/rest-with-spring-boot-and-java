@@ -2,9 +2,11 @@ package com.spring.second.services;
 
 import com.spring.second.exceptions.ResourceNotFoundException;
 import com.spring.second.mapper.ModelMapperUtils;
+import com.spring.second.mapper.custom.PersonMapper;
 import com.spring.second.model.Person;
 import com.spring.second.repository.PersonRepository;
 import com.spring.second.vo.v1.PersonVO;
+import com.spring.second.vo.v2.PersonVOV2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,9 @@ public class PersonServices {
 
     @Autowired
     PersonRepository repository;
+
+    @Autowired
+    PersonMapper mapper;
 
     public List<PersonVO> findAll() {
 
@@ -44,6 +49,18 @@ public class PersonServices {
      var vo = ModelMapperUtils.parseObject(repository.save(entity), PersonVO.class);
 
      return vo;
+
+    }
+
+    public PersonVOV2 createV2(PersonVOV2 person) {
+
+        logger.info("Creating one person with V2!");
+
+        var entity = mapper.convertVOtoEntity(person);
+
+        var vo = mapper.convertEntityToVo(repository.save(entity));
+
+        return vo;
 
     }
 
