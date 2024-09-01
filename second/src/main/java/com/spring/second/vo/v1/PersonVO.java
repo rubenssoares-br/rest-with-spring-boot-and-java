@@ -1,16 +1,22 @@
 package com.spring.second.vo.v1;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import java.io.Serializable;
 import java.util.Objects;
 
 
-
+@JsonPropertyOrder({"id", "address", "first_Name", "last_Name", "gender"})
 public class PersonVO implements Serializable {
 
     private Long id;
 
+    @JsonProperty("first_Name")
     private String firstname;
 
+    @JsonProperty("last_Name")
     private String lastName;
 
     private String address;
