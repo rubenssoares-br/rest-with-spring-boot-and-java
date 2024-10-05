@@ -1,4 +1,6 @@
 package com.spring.second.mapper;
+import com.spring.second.model.Person;
+import com.spring.second.vo.v1.PersonVO;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -9,12 +11,7 @@ import java.util.List;
 @Component
 public class ModelMapperUtils {
 
-    private static ModelMapper mapper;
-
-    public ModelMapperUtils(ModelMapper mapper) {
-        this.mapper = mapper;
-    }
-
+    private static ModelMapper mapper = new ModelMapper();		static {        mapper        	.createTypeMap(Person.class, PersonVO.class).addMapping(Person::getId, PersonVO::setKey);    }
 
     public static <O, D> D parseObject(O origin, Class<D> destination) {
         return mapper.map(origin, destination);
