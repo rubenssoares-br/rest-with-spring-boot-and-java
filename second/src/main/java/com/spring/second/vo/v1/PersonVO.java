@@ -3,15 +3,18 @@ package com.spring.second.vo.v1;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.RepresentationModel;
+import org.springframework.web.bind.annotation.Mapping;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 
 @JsonPropertyOrder({"id", "address", "first_Name", "last_Name", "gender"})
-public class PersonVO implements Serializable {
+public class PersonVO extends RepresentationModel<PersonVO> implements Serializable {
 
-    private Long id;
+    private Long key;
 
     @JsonProperty("first_Name")
     private String firstname;
@@ -25,12 +28,12 @@ public class PersonVO implements Serializable {
 
     public PersonVO() {}
 
-    public Long getId() {
-        return id;
+    public Long getKey() {
+        return key;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setKey(Long key) {
+        this.key = key;
     }
 
     public String getFirstname() {
@@ -69,12 +72,12 @@ public class PersonVO implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PersonVO person = (PersonVO) o;
-        return Objects.equals(id, person.id) && Objects.equals(firstname, person.firstname) && Objects.equals(lastName, person.lastName) && Objects.equals(address, person.address) && Objects.equals(gender, person.gender);
+        PersonVO personVO = (PersonVO) o;
+        return Objects.equals(key, personVO.key) && Objects.equals(firstname, personVO.firstname) && Objects.equals(lastName, personVO.lastName) && Objects.equals(address, personVO.address) && Objects.equals(gender, personVO.gender);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstname, lastName, address, gender);
+        return Objects.hash(key, firstname, lastName, address, gender);
     }
 }
