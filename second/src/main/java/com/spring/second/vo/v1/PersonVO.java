@@ -1,11 +1,8 @@
 package com.spring.second.vo.v1;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
-import org.springframework.web.bind.annotation.Mapping;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -14,6 +11,7 @@ import java.util.Objects;
 @JsonPropertyOrder({"id", "address", "first_Name", "last_Name", "gender"})
 public class PersonVO extends RepresentationModel<PersonVO> implements Serializable {
 
+    @JsonProperty("id")
     private Long key;
 
     @JsonProperty("first_Name")
