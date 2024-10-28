@@ -65,20 +65,20 @@ public class PersonServices {
         return vo;
     }
 
-    public PersonVO create(PersonVO person) {
+    public PersonVO create(PersonVO person) throws Exception {
 
      logger.info("Creating one person!");
 
      var entity = ModelMapperUtils.parseObject(person, Person.class);
 
      var vo = ModelMapperUtils.parseObject(repository.save(entity), PersonVO.class);
-
+     vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel());
      return vo;
 
     }
 
 
-    public PersonVO update(PersonVO person) {
+    public PersonVO update(PersonVO person) throws Exception {
 
         logger.info("Updating one person!");
 
@@ -91,6 +91,7 @@ public class PersonServices {
         entity.setGender(person.getGender());
 
         var vo = ModelMapperUtils.parseObject(repository.save(entity), PersonVO.class);
+        vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel());
         return vo;
 
     }
