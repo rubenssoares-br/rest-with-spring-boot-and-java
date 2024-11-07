@@ -4,6 +4,7 @@ import com.spring.second.model.Person;
 import com.spring.second.repository.PersonRepository;
 import com.spring.second.services.PersonServices;
 import com.spring.second.unittests.mapper.mocks.MockPerson;
+import com.spring.second.vo.v1.PersonVO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -60,7 +61,30 @@ class PersonServicesTest {
     }
 
     @Test
-    void create() {
+    void create() throws Exception {
+        Person entity = input.mockEntity(1);
+        entity.setId(1L);
+
+        Person persisted = entity;
+        persisted.setId(1L);
+
+        PersonVO vo = input.mockVO(1);
+        vo.setKey(1L);
+
+        when(repository.save(entity)).thenReturn(persisted);
+
+        PersonVO result;
+        result = service.create(vo);
+
+        assertNotNull(result);
+        assertNotNull(result.getKey());
+        assertNotNull(result.getLinks());
+
+        assertTrue(result.toString().contains("links: [</api/person/v1/1>;rel=\"self\"]"));
+        assertEquals("Addres Test1", result.getAddress());
+        assertEquals("First Name Test1", result.getFirstname());
+        assertEquals("Last Name Test1", result.getLastName());
+        assertEquals("Female", result.getGender());
     }
 
     @Test
