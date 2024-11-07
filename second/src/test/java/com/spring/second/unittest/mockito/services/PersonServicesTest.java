@@ -72,7 +72,6 @@ class PersonServicesTest {
         vo.setKey(1L);
 
         when(repository.save(entity)).thenReturn(persisted);
-
         PersonVO result;
         result = service.create(vo);
 
@@ -88,7 +87,31 @@ class PersonServicesTest {
     }
 
     @Test
-    void update() {
+    void update() throws Exception {
+        Person entity = input.mockEntity(1);
+
+        Person persisted = entity;
+        persisted.setId(1L);
+
+        PersonVO vo = input.mockVO(1);
+        vo.setKey(1L);
+
+
+        when(repository.findById(1L)).thenReturn(Optional.of(entity));
+        
+        when(repository.save(entity)).thenReturn(persisted);
+
+        var result = service.update(vo);
+
+        assertNotNull(result);
+        assertNotNull(result.getKey());
+        assertNotNull(result.getLinks());
+
+        assertTrue(result.toString().contains("links: [</api/person/v1/1>;rel=\"self\"]"));
+        assertEquals("Addres Test1", result.getAddress());
+        assertEquals("First Name Test1", result.getFirstname());
+        assertEquals("Last Name Test1", result.getLastName());
+        assertEquals("Female", result.getGender());
     }
 
     @Test
